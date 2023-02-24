@@ -1,7 +1,7 @@
 
 
 
-from payment_amount import calculate_payment_amount
+from amortization_functons import calculate_payment_amount
 
 def main() -> None:
     program_is_running = True
