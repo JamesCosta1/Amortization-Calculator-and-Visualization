@@ -52,13 +52,9 @@ def amortizatize(principal: float, annual_interest_rate: float, monthly_payment_
 
         # Store these new values
         balances.append(remaining_balance)
-
         total_interest_paid.append(total_interest_paid[-1] + interest_amount)
-        
         total_principal_paid.append(total_principal_paid[-1] + principal_amount)
-        
         monthly_interest_paid.append(interest_amount)
-        
         monthly_principal_paid.append(principal_amount)
 
     # Round each element of each the list
