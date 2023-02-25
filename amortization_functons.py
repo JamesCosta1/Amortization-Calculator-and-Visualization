@@ -25,40 +25,14 @@ def calculate_payment_amount(principal: float, annual_interest_rate: float, numb
     return monthly_payment_amount
 
 
-'''
-
-# This block creates an array of values to check the rate. There seems to be a bug somewhere...
-x = 1
-rates = np.array([])
-while x >= 0.0:
-    rates = np.append([rates], x)
-    x -= 0.02
-rates.round(2)
-print(rates)
-print(rates[0])
-
-for rate in rates:
-    print(f"When r ={rate: .2f} the monthly payment amount is ${calculate_payment_amount(200_000, rate, 24): .2f}")
-
-
-print()
-print(f"The monthly payment is ${calculate_payment_amount(200_000, 0.06, 24)}")
-
-
-
-print(f"The monthly payment is ${calculate_payment_amount(5_000, 0.07, 240)}")
-
-'''
-
-
 
 def amortizatize(principal: float, annual_interest_rate: float, monthly_payment_amount: float) -> tuple[list[float], list[float], list[float], list[float], list[float]]:
     remaining_balance = principal
     balances = [principal]
     total_interest_paid = [0]
     total_principal_paid = [0]
-    monthly_interest_paid = [remaining_balance * interest_rate]
-    monthly_principal_paid = [monthly_payment_amount - interest_amount]
+    monthly_interest_paid = [0]
+    monthly_principal_paid = [0]
 
     interest_rate = annual_interest_rate / 12
     # multiplier = 1 + interest_rate
@@ -78,21 +52,28 @@ def amortizatize(principal: float, annual_interest_rate: float, monthly_payment_
 
         # Store these new values
         balances.append(remaining_balance)
+
         total_interest_paid.append(total_interest_paid[-1] + interest_amount)
+        
         total_principal_paid.append(total_principal_paid[-1] + principal_amount)
-        monthly_interest_paid.append()
+        
+        monthly_interest_paid.append(interest_amount)
+        
+        monthly_principal_paid.append(principal_amount)
 
     # Round each element of each the list
     balances = [round(x, 2) for x in balances]
-    interest_paid = [round(x, 2) for x in interest_paid]
-    principal_paid = [round(x,2) for x in principal_paid]
+    total_interest_paid = [round(x, 2) for x in total_interest_paid]
+    total_principal_paid = [round(x, 2) for x in total_principal_paid]
+    monthly_interest_paid = [round(x, 2) for x in monthly_interest_paid]
+    monthly_principal_paid = [round(x,2) for x in monthly_principal_paid]
 
-    return balances, interest_paid, principal_paid
+    return balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid
 
 # Testing the amortizate function:
 def testing_function(): # Delete later!!!!!!
 
-    balances, interest_paid, principal_paid = amortizatize(5_000, 0.05, 219.36)
+    balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid = amortizatize(5_000, 0.05, 219.36)
 
     
 
@@ -100,13 +81,21 @@ def testing_function(): # Delete later!!!!!!
 
     print('')
 
-    print(f'The amount of interest paid at the end of every month is:{interest_paid}')
+    print(f'The  total interest paid thusfar is:{total_interest_paid}')
 
     print('')
 
-    print(f'The amount of principal paid at the end of every month is:{principal_paid}')
+    print(f'The total principal paid paid thusfar is:{total_principal_paid}')
+
+    print('')
+
+    print(f'The amount of interest paid at the end of every month is:{monthly_interest_paid}')
+
+    print('')
+
+    print(f'The amount of principal paid at the end of every month is:{monthly_principal_paid}')
 
 
-testing_function()
+# testing_function()
     
 
