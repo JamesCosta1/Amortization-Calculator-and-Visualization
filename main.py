@@ -1,9 +1,12 @@
+#! /usr/bin/python3
 
+from os import system
 
 
 from amortization_functons import calculate_payment_amount
 
 def main() -> None:
+    system('clear')
     program_is_running = True
     while program_is_running:
         print("Welcome to this amartiztion calculator.")
@@ -12,30 +15,6 @@ def main() -> None:
         print("0. Close progam")
         userinput = input()
 
-
-
-
-def get_user_int(input_: any) -> int:
-    while True:
-        input_ = input("")
-        try:
-           input_ = int(input_.strip())
-           return input_
-
-        except ValueError:
-          print('Please enter a valid input.')
-
-
-
-def get_user_float(input_: any) -> float:
-    while True:
-        input_ = input("")
-        try:
-           input_ = float(input_.strip())
-           return input_
-
-        except ValueError:
-          print('Please enter a valid input.')
 
 
 if __name__ == "__main__":

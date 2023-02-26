@@ -1,58 +1,58 @@
 #! /usr/bin/python3
 
-import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.widgets import CheckButtons
 
 
-'''
+def plotter() -> None:
+    x = range(0, 25)
+    y1 = [10] * 25
+    y2 = [20] * 25
+    y3 = [30] * 25
+    y4 = [40] * 25
+    y5 = [50] * 25
 
-def plotter(x: list[float], y: list[float]):
-    fig, ax = plt.subplots(figsize = (12,8))
+    # balances
+    # total_interest_paid
+    # total_principal_paid
+    # monthly_interest_paid
+    # monthly_principal_paid
 
-    line_1, = ax.plot(y, '-', label='line_1')
-    line_2, = ax.plot(x, y[x], '-')
+    fig, ax = plt.subplots()
+    p1, = ax.plot(x ,y1, color='teal', label='Balance')
+    p2, = ax.plot(x, y2, color='darkturquoise', label='Total Interest Paid')
+    p3, = ax.plot(x, y3, color='mediumpurple', label='Total Principal Paid')
+    p4, = ax.plot(x, y4, color='mediumturquoise',label='Interest Paid per Month')
+    p5, = ax.plot(x, y5, color='mediumorchid', label='Principal Paid per Month')
+
+    plots = [p1, p2, p3, p4, p5]
+    plt.axis([-2.5, 30, 0, 60])
+    plt.subplots_adjust(left=0.25, bottom=0.1, right=0.95, top=0.95)
 
 
+    # Generate CheckButton widget
+
+    labels = ['teal', 'darkturquise', 'mediumpurple', 'mediumturquoise', 'mediumorchid']
+    # Set only the balances, monthly interest paid, and monthly principal paid to visible on startup
+    activated = [True, False, False, True, True]
+
+    # Define the area size of the legend
+    ax_check_button = plt.axes([0.03, 0.4, 0.15, 0.15])
+    check_box = CheckButtons(ax_check_button, labels, activated)
+
+    def set_visible(label):
+        '''
+        Connects the checkbox object with the on click signal.
+        '''
+        
+        index = labels.index(label)
+        plots[index].set_visible(not plots[index].get_visible())
+        plt.draw()
+
+    check_box.on_clicked(set_visible)
     plt.show()
 
 
-    legend = plt.legend(loc='upper left')
-    line1_legend, line2_legend = legend.get_lines()
 
-    # Configs how the label will behave
-    line1_legend.set_picker(True)
-    line1_legend.set_pickradius(10)
-
-
-    #link the legends and graphs together
-    graphs = {}
-    graphs[line1_legend] = line
-
-    # Deal with events
-    def on_pick(event):
-        legend = event.artist
-        is_visible = legend.get_visible(not is_visible)
-
-        graphs[legend].set_variable()
-        legend.set_visible(not is_visible)
-
-        fig.canvas.draw()
-
-
-    plt.connect('pick_event', on_pick)
-
-'''
-
-def plotter(x: list[float], y: list[float]) -> None:
-    plt.plot(x, y, 'b')
-
-
-    plt.title('Amortization')
-    plt.xlabel('months')
-    plt.ylabel('dollars')
-    
-
-    plt.show()
-
-
-plotter([0, 1, 2], [24, 15, 3])
+if __name__ == '__main__':
+    plotter()
