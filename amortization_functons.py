@@ -1,5 +1,7 @@
 #! /usr/bin/python3
 import numpy as np
+from decimal import Decimal
+from tabulate import tabulate
 
 def calculate_payment_amount(principal: float, annual_interest_rate: float, number_of_payments: int) -> float:
     '''
@@ -8,7 +10,7 @@ def calculate_payment_amount(principal: float, annual_interest_rate: float, numb
         annual_interest_rate (float) :  The percentage amount the owed amount will grow in a year
         number_of_payments (int):       The total number of payments made over the life of the loan
                                         (If payments are made monthly, this is the same value as the
-                                         loan's lifetime in months)
+                                        loan's lifetime in months)
 
 
     Returns:
@@ -24,6 +26,9 @@ def calculate_payment_amount(principal: float, annual_interest_rate: float, numb
 
     return monthly_payment_amount
 
+# Maybe write a truncate function?
+# 12.344560963459802345 -> mult by 100 -> trncate -> divide by 100
+
 
 
 def amortizatize(principal: float, annual_interest_rate: float, monthly_payment_amount: float) -> tuple[list[float], list[float], list[float], list[float], list[float]]:
@@ -38,7 +43,7 @@ def amortizatize(principal: float, annual_interest_rate: float, monthly_payment_
     # multiplier = 1 + interest_rate
 
     while remaining_balance > 0: #TODO: Consider that a last payment might overpay slightly, so I must make this last payment exactly the
-        #remaining balance of the last month.
+        #remaining balance of the last month. ALSO need to think abour rounding errors. Maybe concider Decimal()?
 
         # Calculate the interest amount for this month
         interest_amount = remaining_balance * interest_rate
@@ -95,3 +100,20 @@ def testing_function(): # Delete later!!!!!!
 # testing_function()
     
 
+def monthly_exhibition(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid) -> None:
+    '''
+    Displays the status of funds on a monthly basis
+    '''
+
+    table_data = np.array([balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid])
+    headers = ['Remaining Balance', 'Total Interest Paid', 'Total Principal Paid', 'Monthly Interest Paid', 'Monthly Principal Paid']
+
+    # Generate the table
+    table = tabulate(table_data, headers, tablefmt='fancygrid')
+    print(table)
+
+
+balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid = amortizatize(5_000, 0.05, 219.36)
+monthly_exhibition(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid)
+
+# This data is printing the data in a hideous way. May need to use something differnet or edit what I have
