@@ -74,7 +74,7 @@ def amortizatize(principal: float,
     # multiplier = 1 + interest_rate
 
     while remaining_balance > 0: #TODO: Consider that a last payment might overpay slightly, so I must make this last payment exactly the
-        #remaining balance of the last month. ALSO need to think abour rounding errors. Maybe concider Decimal()?
+        #remaining balance of the last month. ALSO need to think about rounding errors. Maybe concider Decimal()?
 
         # Calculate the interest amount for this month
         interest_amount = remaining_balance * interest_rate
@@ -112,7 +112,7 @@ def monthly_exhibition(balances,
                        monthly_principal_paid) -> None:
 
     '''
-    Displays on a monthly basis (1) remaining balance, (2) total interest paid, (3) total Principal paid, (3) monthly interest paid, and 
+    Displays on a monthly basis (1) remaining balance, (2) total interest paid, (3) total principal paid, (3) monthly interest paid, and 
     (3) monthly principal paid. 
     '''
 

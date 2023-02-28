@@ -33,13 +33,13 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
 
     # Set the dimentions of the axes. x[-1] is the length of each list. Since the highest point will be the first element
     # of balances, I made the y max height just a bit more than that
-    plt.axis([-3, (x + 10), -3, (balances[0] + 10)])
+    plt.axis([-3, (x[-1] + 10), -3, (balances[0] + 10)])
     plt.subplots_adjust(left=0.25, bottom=0.1, right=0.95, top=0.95)
 
 
     # Generate CheckButton widget
 
-    labels = ['teal', 'darkturquise', 'mediumpurple', 'mediumturquoise', 'mediumorchid']
+    labels = ['Remaining Balance', 'Total Interest Paid', 'Total Principal Paid', 'Monthly Interest Paid', 'Monthly Principal Paid']
     # Set all plots to visible on startup
     activated = [True, True, True, True, True]
 
