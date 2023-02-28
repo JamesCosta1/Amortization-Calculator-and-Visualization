@@ -7,22 +7,24 @@ from plotting_functions import plotter
 def main() -> None:
     system('clear')
     program_is_running = True
+
+    print('Welcome to this amortiztion calculator.')
     while program_is_running:
-        print("Welcome to this amartiztion calculator.")
-        print("Please select an option below:")
-        print("1. Calculate my monthly payment")
-        print("0. Close progam")
+        print('Please select an option below: \n')
+        print('1. Calculate a monthly payment')
+        print('0. Close program')
         
         input_ = hf.read_user_int()
         if input_ == 0:
             program_is_running = False
         elif input_ == 1:
             princpial, annual_interest_rate, number_of_payments, monthly_payment_amount = hf.recieve_initial_paramaters()
+            print(f'Given this information, your monthly payment will be ${monthly_payment_amount}')
 
             while not monthly_payment_amount is None:
-                print('What would you like to do now?')
-                print('1. Display the monthly schedule using a monthly payment of XXXXXX')
-                print('2. View the amortization graph using a monthly payment of XXXXXX')
+                print('What would you like to do now? \n')
+                print(f'1. Display the monthly schedule using a monthly payment of ${monthly_payment_amount}')
+                print(f'2. View the amortization graph using a monthly payment of ${monthly_payment_amount}')
                 print('3. To back to main menu.')
                 print('0. Exit')
 
