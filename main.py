@@ -48,7 +48,7 @@ def main() -> None:
         else:
             print("Please input a valid option.")
     
-    print('Thank you, have good day!')
+    print('Thank you for using this application, have good day!')
 
 
 
