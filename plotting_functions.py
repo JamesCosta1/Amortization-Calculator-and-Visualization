@@ -10,19 +10,7 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
     
     x = range(len(balances))
 
-    # y1 = [10] * 25
-    # y2 = [20] * 25
-    # y3 = [30] * 25
-    # y4 = [40] * 25
-    # y5 = [50] * 25
-
-    # balances
-    # total_interest_paid
-    # total_principal_paid
-    # monthly_interest_paid
-    # monthly_principal_paid
-
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots() #TODO: ADD AXIS LABELS AND CHANGE PLOT COLORS TO BE MORE DISTINCT, AND ADD SOME GRID LINES MAYBE?
     balances_plot, = ax.plot(x, balances, color='teal', label='Balance')
     total_interest_plot, = ax.plot(x, total_interest_paid, color='darkturquoise', label='Total Interest Paid')
     total_principal_plot, = ax.plot(x, total_principal_paid, color='mediumpurple', label='Total Principal Paid')
@@ -31,9 +19,9 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
 
     plots = [balances_plot, total_interest_plot, total_principal_plot, monthly_interest_plot, monthly_principal_plot]
 
-    # Set the dimentions of the axes. x[-1] is the length of each list. Since the highest point will be the first element
+    # Set the dimensions of the axes. x[-1] is the length of each list. Since the highest point will be the first element
     # of balances, I made the y max height just a bit more than that
-    plt.axis([-3, (x[-1] + 10), -3, (balances[0] + 10)])
+    plt.axis([0, (x[-1] + 10), 0, (balances[0] + 10)])
     plt.subplots_adjust(left=0.25, bottom=0.1, right=0.95, top=0.95)
 
 

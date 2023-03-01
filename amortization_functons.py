@@ -42,7 +42,7 @@ def amortizatize(principal: float,
                                                          list[float],
                                                          list[float],
                                                          list[float],
-                                                         list[float]]:
+                                                         list[float]]: #TODO: WRITE A EXPLINATION OF THIS FUNCTION IN THE DOCSTR
 
     '''
     Args:
@@ -105,7 +105,7 @@ def amortizatize(principal: float,
     return balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid
 
 
-def monthly_exhibition(balances,
+def display_data(balances,
                        total_interest_paid,
                        total_principal_paid,
                        monthly_interest_paid,
@@ -128,8 +128,9 @@ def monthly_exhibition(balances,
 
     df = pd.DataFrame(data)
 
-    print(df)
+    # The to_markdown method is invoked so that even large dataframes will be displayed.
+    print(df.to_markdown())
 
 if __name__ == '__main__':
     balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid = amortizatize(5_000, 0.05, 219.36)
-    monthly_exhibition(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid)
+    display_data(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid)
