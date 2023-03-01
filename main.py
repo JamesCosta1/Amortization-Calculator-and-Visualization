@@ -2,10 +2,11 @@
 
 from os import system
 import helper_functions as hf
-import amortization_functons as af
 
 def main() -> None:
     system('clear')
+    
+    # This variable is defined due to scoping. I want to be able to close the progam when inside of the options menu.
     program_is_running = True
 
     print('Welcome to this amortiztion calculator.')
@@ -19,11 +20,11 @@ def main() -> None:
             program_is_running = False
 
         elif input_ == 1:
-            # Rewrite this function so that I do not need to recieve a useless variable I name named _.
+            # TODO: Rewrite this function so that I do not need to recieve a useless variable I name named _.
             principal, annual_interest_rate, _, monthly_payment_amount = hf.recieve_initial_parameters()
-            print(f'Given this information, your monthly payment will be ${monthly_payment_amount}')
 
-            hf.options_menu(principal, annual_interest_rate, monthly_payment_amount)
+            # This value returns false if the close program option is selected, returns true otherwise.
+            program_is_running = hf.options_menu(principal, annual_interest_rate, monthly_payment_amount)
 
         else:
             print("Please input a valid option.")
