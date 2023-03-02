@@ -1,7 +1,5 @@
 #! /usr/bin/python3
-import numpy as np
-from decimal import Decimal
-from tabulate import tabulate
+
 import pandas as pd
 
 def calculate_payment_amount(principal: float,
@@ -15,14 +13,20 @@ def calculate_payment_amount(principal: float,
         annual_interest_rate (float):   The percentage amount the owed amount will grow in a year
         number_of_payments (int):       The total number of payments made over the life of the loan
                                         (If payments are made monthly, this is the same value as the
-                                        loan's lifetime in months)
+                                         loan's lifetime in months)
 
 
     Returns:
         monthly_payment_amount (float)
     '''
-    # Convert annual interest rate into monthly
+
+    # Convert annual interest rate as a percent to a decimal
+    annual_interest_rate /= 100
+
+    # Convert annual interest rate to monthly
     interest_rate = annual_interest_rate / 12
+
+
     
     numerator = interest_rate * ((1 + interest_rate) ** (number_of_payments))
     denominator = ((1 + interest_rate) ** (number_of_payments)) - 1
@@ -30,9 +34,6 @@ def calculate_payment_amount(principal: float,
     monthly_payment_amount = principal * (numerator / denominator)
 
     return monthly_payment_amount
-
-# Maybe write a truncate function?
-# 12.344560963459802345 -> mult by 100 -> trncate -> divide by 100
 
 
 
@@ -43,8 +44,9 @@ def amortizatize(principal: float,
                                                          list[float],
                                                          list[float],
                                                          list[float]]:
-
     '''
+    Generates lists with each subsequent element corrosponding to each month until the remaining balance becomes zero.
+
     Args:
         principal (float):                    The total amount of money lent
         annual_interest_rate (float) :        The percentage amount the owed amount will grow in a year
@@ -57,9 +59,6 @@ def amortizatize(principal: float,
         total_principal_paid (list[float]):   The amount of principal paid thus far
         monthly_interest_paid (list[float]):  The amount of funds used to pay interest each month
         monthly_principal_paid (list[float]): The amount of funds used to pay interest each month
-
-
-
     '''
 
     # Initialize
@@ -70,11 +69,14 @@ def amortizatize(principal: float,
     monthly_interest_paid = [0]
     monthly_principal_paid = [0]
 
-    interest_rate = annual_interest_rate / 12
-    # multiplier = 1 + interest_rate
+    # Convert annual interest rate as a percent to a decimal
+    annual_interest_rate /= 100
 
+    # Convert annual interest rate to monthly
+    interest_rate = annual_interest_rate / 12
+    
     while remaining_balance > 0: #TODO: Consider that a last payment might overpay slightly, so I must make this last payment exactly the
-        #remaining balance of the last month. ALSO need to think abour rounding errors. Maybe concider Decimal()?
+        #remaining balance of the last month. ALSO need to think about rounding errors. Maybe concider Decimal()?
 
         # Calculate the interest amount for this month
         interest_amount = remaining_balance * interest_rate
@@ -96,26 +98,32 @@ def amortizatize(principal: float,
         monthly_principal_paid.append(principal_amount)
 
     # Round each element of each the list
-    balances = [round(x, 2) for x in balances]
-    total_interest_paid = [round(x, 2) for x in total_interest_paid]
-    total_principal_paid = [round(x, 2) for x in total_principal_paid]
-    monthly_interest_paid = [round(x, 2) for x in monthly_interest_paid]
-    monthly_principal_paid = [round(x, 2) for x in monthly_principal_paid]
+    # balances = [round(x, 2) for x in balances]
+    # total_interest_paid = [round(x, 2) for x in total_interest_paid]
+    # total_principal_paid = [round(x, 2) for x in total_principal_paid]
+    # monthly_interest_paid = [round(x, 2) for x in monthly_interest_paid]
+    # monthly_principal_paid = [round(x, 2) for x in monthly_principal_paid]
 
     return balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid
 
 
-def monthly_exhibition(balances,
-                       total_interest_paid,
-                       total_principal_paid,
-                       monthly_interest_paid,
-                       monthly_principal_paid) -> None:
+
+def display_data(balances,
+                 total_interest_paid,
+                 total_principal_paid,
+                 monthly_interest_paid,
+                 monthly_principal_paid) -> None:
 
     '''
-    Displays on a monthly basis (1) remaining balance, (2) total interest paid, (3) total Principal paid, (3) monthly interest paid, and 
+    Displays on a monthly basis (1) remaining balance, (2) total interest paid, (3) total principal paid, (3) monthly interest paid, and 
     (3) monthly principal paid. 
     '''
 
+    # Insert $ in front and a comma every thousands place.
+    pd.options.display.float_format = '${:,.2f}'.format
+
+    # Allows for much more data to be displayed.
+    pd.set_option('display.max_rows', 512)
 
     data = {
         'Remaining Balance': balances,
@@ -125,11 +133,9 @@ def monthly_exhibition(balances,
         'Monthly Principal Paid': monthly_principal_paid
         }
 
-
     df = pd.DataFrame(data)
 
+    # Name the index column 'Month' instead of being unnamed by default
+    df.index.name = 'Month'
+ 
     print(df)
-
-if __name__ == '__main__':
-    balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid = amortizatize(5_000, 0.05, 219.36)
-    monthly_exhibition(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid)

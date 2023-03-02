@@ -2,44 +2,58 @@
 
 import matplotlib.pyplot as plt
 from matplotlib.widgets import CheckButtons
-import amortization_functons as af
 
 
 def plotter(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid) -> None:
-    
-    
-    x = range(len(balances))
+    '''
+    Plots each set of values on a single plot in a new window and gives togglable display capabilities to the user for each plot.
 
-    # y1 = [10] * 25
-    # y2 = [20] * 25
-    # y3 = [30] * 25
-    # y4 = [40] * 25
-    # y5 = [50] * 25
+    Args:
+        balances (list[float]):               The amount of money still owed each month
+        total_interest_paid (list[float]):    The amount of interest paid thus far
+        total_principal_paid (list[float]):   The amount of principal paid thus far
+        monthly_interest_paid (list[float]):  The amount of funds used to pay interest each month
+        monthly_principal_paid (list[float]): The amount of funds used to pay interest each month
+    '''
 
-    # balances
-    # total_interest_paid
-    # total_principal_paid
-    # monthly_interest_paid
-    # monthly_principal_paid
+    months = range(len(balances))
 
-    fig, ax = plt.subplots()
-    balances_plot, = ax.plot(x, balances, color='teal', label='Balance')
-    total_interest_plot, = ax.plot(x, total_interest_paid, color='darkturquoise', label='Total Interest Paid')
-    total_principal_plot, = ax.plot(x, total_principal_paid, color='mediumpurple', label='Total Principal Paid')
-    monthly_interest_plot, = ax.plot(x, monthly_interest_paid, color='mediumturquoise',label='Interest Paid per Month')
-    monthly_principal_plot, = ax.plot(x, monthly_principal_paid, color='mediumorchid', label='Principal Paid per Month')
+    _, ax = plt.subplots()
+    balances_plot, = ax.plot(months, balances, color='teal', label='Balance')
+    total_interest_plot, = ax.plot(months, total_interest_paid, color='darkturquoise', label='Total Interest Paid')
+    total_principal_plot, = ax.plot(months, total_principal_paid, color='mediumseagreen', label='Total Principal Paid')
+    monthly_interest_plot, = ax.plot(months, monthly_interest_paid, color='mediumturquoise',label='Interest Paid per Month')
+    monthly_principal_plot, = ax.plot(months, monthly_principal_paid, color='springgreen', label='Principal Paid per Month')
 
     plots = [balances_plot, total_interest_plot, total_principal_plot, monthly_interest_plot, monthly_principal_plot]
 
-    # Set the dimentions of the axes. x[-1] is the length of each list. Since the highest point will be the first element
-    # of balances, I made the y max height just a bit more than that
-    plt.axis([-3, (x + 10), -3, (balances[0] + 10)])
-    plt.subplots_adjust(left=0.25, bottom=0.1, right=0.95, top=0.95)
+    # TODO: MAKE THE BUTTONS/LEGEND COLORED
+    def determine_higest_point(balances, total_interest_paid):
+        '''Finds the largest value among all lists so the y-axis can be determined by this value.'''
+        
+        if balances[0] > total_interest_paid[-1]:
+            largest_y_val = balances[0]
 
+        else:
+            largest_y_val = total_interest_paid[-1]
+
+        return largest_y_val
+    
+    number_of_months = months[-1]
+    largest_y_val = determine_higest_point(balances, total_interest_paid)
+
+    # Use a ratio of the domain and range of the set of plots to better fit the graphs in the window
+    plt.axis([0, (number_of_months * 1.1), 0, (largest_y_val * 1.1)])
+    plt.subplots_adjust(left=0.25, bottom=0.10, right=0.95, top=0.95)
+
+    plt.title('Amortization Plot')
+    plt.xlabel('Number of months')
+    plt.ylabel('Dollars')
+    plt.grid()
 
     # Generate CheckButton widget
 
-    labels = ['teal', 'darkturquise', 'mediumpurple', 'mediumturquoise', 'mediumorchid']
+    labels = ['Remaining Balance', 'Total Interest Paid', 'Total Principal Paid', 'Monthly Interest Paid', 'Monthly Principal Paid']
     # Set all plots to visible on startup
     activated = [True, True, True, True, True]
 
@@ -56,9 +70,3 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
 
     check_box.on_clicked(set_visible)
     plt.show()
-
-
-
-if __name__ == '__main__':
-    balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid = af.amortizatize(5_000, 0.05, 219.36)
-    plotter(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid)
