@@ -1,7 +1,42 @@
 #! /usr/bin/python3
 
+import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.widgets import CheckButtons
+
+
+def display_data(balances,
+                 total_interest_paid,
+                 total_principal_paid,
+                 monthly_interest_paid,
+                 monthly_principal_paid) -> None:
+
+    '''
+    Displays on a monthly basis (1) remaining balance, (2) total interest paid, (3) total principal paid, (3) monthly interest paid, and 
+    (3) monthly principal paid. 
+    '''
+
+    # Insert $ in front and a comma every three didgets
+    pd.options.display.float_format = '${:,.2f}'.format
+
+    # Allows for much more data to be displayed.
+    pd.set_option('display.max_rows', 601)
+
+    data = {
+        'Remaining Balance': balances,
+        'Total Interest Paid': total_interest_paid,
+        'Total Principal Paid': total_principal_paid,
+        'Monthly Interest Paid': monthly_interest_paid,
+        'Monthly Principal Paid': monthly_principal_paid
+        }
+
+    df = pd.DataFrame(data)
+
+    # Name the index column 'Month' instead of being unnamed by default
+    df.index.name = 'Month'
+ 
+    print(df)
+
 
 
 def plotter(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid) -> None:
@@ -29,8 +64,10 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
 
     # TODO: MAKE THE BUTTONS/LEGEND COLORED
     def determine_higest_point(balances, total_interest_paid):
-        '''Finds the largest value among all lists so the y-axis can be determined by this value.'''
-        
+        '''
+        Finds the largest value among all lists (balances and total_interest_paid are the only two contenders among the
+        five lits) so the y-axis can be determined by this value.
+        '''
         if balances[0] > total_interest_paid[-1]:
             largest_y_val = balances[0]
 
@@ -39,11 +76,11 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
 
         return largest_y_val
     
-    number_of_months = months[-1]
+    total_number_of_months = months[-1]
     largest_y_val = determine_higest_point(balances, total_interest_paid)
 
     # Use a ratio of the domain and range of the set of plots to better fit the graphs in the window
-    plt.axis([0, (number_of_months * 1.1), 0, (largest_y_val * 1.1)])
+    plt.axis([0, (total_number_of_months * 1.1), 0, (largest_y_val * 1.1)])
     plt.subplots_adjust(left=0.25, bottom=0.10, right=0.95, top=0.95)
 
     plt.title('Amortization Plot')
@@ -63,10 +100,11 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
 
     def set_visible(label):
         '''Connects the checkbox object with the on click signal.'''
-        
         index = labels.index(label)
         plots[index].set_visible(not plots[index].get_visible())
         plt.draw()
 
     check_box.on_clicked(set_visible)
     plt.show()
+
+# TODO: POTENTIALLY WRITE A DOWNLOAD TO CSV FILE OPTION THAT THE USER CAN CHOOSE
