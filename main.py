@@ -22,10 +22,12 @@ def main() -> None:
             program_is_running = False
 
         elif input_ == 1:
-            # TODO: Rewrite this function so that I do not need to recieve a useless variable I name named _
-            principal, annual_interest_rate, _, monthly_payment_amount = mf.recieve_initial_parameters()
+            # Call and return all the initial parameters provided by the user.
+            principal, annual_interest_rate, monthly_payment_amount = mf.recieve_initial_parameters()
 
-            # This value returns false if the close program option is selected, returns true otherwise
+            # Pass these user inputs into options_menu. Then the user is asked what they would like done with this data.
+            # Note that this function returns false if the close program option is selected. When they instead want to
+            # just return to the main menu,true is returned.
             program_is_running = mf.options_menu(principal, annual_interest_rate, monthly_payment_amount)
 
         else:

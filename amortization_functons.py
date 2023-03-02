@@ -85,11 +85,13 @@ def amortizatize(principal: float,
         # Calculate the principal paid amount for this month
         principal_amount = monthly_payment_amount - interest_amount
 
-        # Store these new values
+        # Store these new values in each respective list
         balances.append(remaining_balance)
         total_interest_paid.append(total_interest_paid[-1] + interest_amount)
         total_principal_paid.append(total_principal_paid[-1] + principal_amount)
         monthly_interest_paid.append(interest_amount)
         monthly_principal_paid.append(principal_amount)
-
+    
+    
+    
     return balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid

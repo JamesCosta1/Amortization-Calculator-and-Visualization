@@ -19,7 +19,7 @@ def display_data(balances,
     # Insert $ in front and a comma every three didgets
     pd.options.display.float_format = '${:,.2f}'.format
 
-    # Allows for much more data to be displayed.
+    # Allow for much more data to be displayed.
     pd.set_option('display.max_rows', 601)
 
     data = {
@@ -84,8 +84,13 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
     plt.subplots_adjust(left=0.25, bottom=0.10, right=0.95, top=0.95)
 
     plt.title('Amortization Plot')
+
     plt.xlabel('Number of months')
-    plt.ylabel('Dollars')
+
+    # Grab the current y labels and change their format
+    current_y_values = plt.gca().get_yticks()
+    plt.gca().set_yticklabels(['${:,.0f}'.format(x) for x in current_y_values])
+    
     plt.grid()
 
     # Generate CheckButton widget
@@ -96,7 +101,7 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
 
     # Define the area size of the legend
     ax_for_check_button = plt.axes([0.03, 0.4, 0.15, 0.15])
-    check_box = CheckButtons(ax_for_check_button, labels, activated)
+    check_box = CheckButtons(ax_for_check_button, labels=labels, actives=activated)
 
     def set_visible(label):
         '''Connects the checkbox object with the on click signal.'''

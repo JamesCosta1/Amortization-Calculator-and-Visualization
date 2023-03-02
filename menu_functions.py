@@ -7,25 +7,24 @@ import user_input_functions as uf
 
 def recieve_initial_parameters() -> tuple[float, float, int, float]: 
     '''
-    Argigates the user input data and returns the the calculated values. This is an intermediate function
+    Aggregates the user input data and returns the the calculated values. This is an intermediate function
     in order to minimize the number of function calls in the main file.
 
     Returns:
         principal (float):                    The total amount of money lent
         annual_interest_rate (float):         The percentage amount the owed amount will grow in a year
+        monthly_payment_amount (float):       The amount of money paid per month
     '''
 
     princpial = uf.read_user_principal_size()
-    
     annual_interest_rate = uf.read_user_interest_rate_amount()
-
     number_of_payments = uf.read_user_number_of_months()
 
     monthly_payment_amount = af.calculate_payment_amount(princpial, annual_interest_rate, number_of_payments)
     
     print(f'\nGiven this information, your monthly payment will be ${monthly_payment_amount:,.2f}')
 
-    return princpial, annual_interest_rate, number_of_payments, monthly_payment_amount
+    return princpial, annual_interest_rate, monthly_payment_amount
 
 
 
@@ -57,7 +56,7 @@ def options_menu(principal, annual_interest_rate, monthly_payment_amount) -> boo
             balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid = af.amortizatize(principal,
                                                                                                                                  annual_interest_rate,
                                                                                                                                  monthly_payment_amount)
-            # Pass the lists into the plotter
+            # Pass the lists into plotter
             ef.plotter(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid)
 
         elif input_ == 3:
