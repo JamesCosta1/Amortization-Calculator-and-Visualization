@@ -19,8 +19,14 @@ def calculate_payment_amount(principal: float,
     Returns:
         monthly_payment_amount (float)
     '''
-    # Convert annual interest rate into monthly
+
+    # Convert annual interest rate as a percent to a decimal
+    annual_interest_rate /= 100
+
+    # Convert annual interest rate to monthly
     interest_rate = annual_interest_rate / 12
+
+
     
     numerator = interest_rate * ((1 + interest_rate) ** (number_of_payments))
     denominator = ((1 + interest_rate) ** (number_of_payments)) - 1
@@ -28,9 +34,6 @@ def calculate_payment_amount(principal: float,
     monthly_payment_amount = principal * (numerator / denominator)
 
     return monthly_payment_amount
-
-# Maybe write a truncate function?
-# 12.344560963459802345 -> mult by 100 -> trncate -> divide by 100
 
 
 
@@ -66,8 +69,12 @@ def amortizatize(principal: float,
     monthly_interest_paid = [0]
     monthly_principal_paid = [0]
 
-    interest_rate = annual_interest_rate / 12
+    # Convert annual interest rate as a percent to a decimal
+    annual_interest_rate /= 100
 
+    # Convert annual interest rate to monthly
+    interest_rate = annual_interest_rate / 12
+    
     while remaining_balance > 0: #TODO: Consider that a last payment might overpay slightly, so I must make this last payment exactly the
         #remaining balance of the last month. ALSO need to think about rounding errors. Maybe concider Decimal()?
 
@@ -91,17 +98,16 @@ def amortizatize(principal: float,
         monthly_principal_paid.append(principal_amount)
 
     # Round each element of each the list
-    balances = [round(x, 2) for x in balances]
-    total_interest_paid = [round(x, 2) for x in total_interest_paid]
-    total_principal_paid = [round(x, 2) for x in total_principal_paid]
-    monthly_interest_paid = [round(x, 2) for x in monthly_interest_paid]
-    monthly_principal_paid = [round(x, 2) for x in monthly_principal_paid]
+    # balances = [round(x, 2) for x in balances]
+    # total_interest_paid = [round(x, 2) for x in total_interest_paid]
+    # total_principal_paid = [round(x, 2) for x in total_principal_paid]
+    # monthly_interest_paid = [round(x, 2) for x in monthly_interest_paid]
+    # monthly_principal_paid = [round(x, 2) for x in monthly_principal_paid]
 
     return balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid
 
 
 
-# TODO: When values get big, they become exp form. I do not want that. Also, having commas (like 5,000 instead of 5000) would be nice
 def display_data(balances,
                  total_interest_paid,
                  total_principal_paid,
@@ -113,6 +119,11 @@ def display_data(balances,
     (3) monthly principal paid. 
     '''
 
+    # Insert $ in front and a comma every thousands place.
+    pd.options.display.float_format = '${:,.2f}'.format
+
+    # Allows for much more data to be displayed.
+    pd.set_option('display.max_rows', 512)
 
     data = {
         'Remaining Balance': balances,
@@ -122,11 +133,9 @@ def display_data(balances,
         'Monthly Principal Paid': monthly_principal_paid
         }
 
-
     df = pd.DataFrame(data)
 
-    # Rename the index column for clarity when displayed. This column has no name by default.
+    # Name the index column 'Month' instead of being unnamed by default
     df.index.name = 'Month'
-
-    # The to_markdown method is invoked so that even large dataframes will be displayed.
-    print(df.to_markdown())
+ 
+    print(df)

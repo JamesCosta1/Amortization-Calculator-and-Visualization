@@ -18,7 +18,7 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
 
     months = range(len(balances))
 
-    _, ax = plt.subplots() #TODO: MAKE THE X-AXIS AND Y-AXIS MORE DYNAMICALLY SIZED. USE A RATIO NOT JUST ADDITION.
+    _, ax = plt.subplots()
     balances_plot, = ax.plot(months, balances, color='teal', label='Balance')
     total_interest_plot, = ax.plot(months, total_interest_paid, color='darkturquoise', label='Total Interest Paid')
     total_principal_plot, = ax.plot(months, total_principal_paid, color='mediumseagreen', label='Total Principal Paid')
@@ -27,6 +27,7 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
 
     plots = [balances_plot, total_interest_plot, total_principal_plot, monthly_interest_plot, monthly_principal_plot]
 
+    # TODO: MAKE THE BUTTONS/LEGEND COLORED
     def determine_higest_point(balances, total_interest_paid):
         '''Finds the largest value among all lists so the y-axis can be determined by this value.'''
         
@@ -41,8 +42,9 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
     number_of_months = months[-1]
     largest_y_val = determine_higest_point(balances, total_interest_paid)
 
-    plt.axis([0, (number_of_months + 10), 0, (largest_y_val + 10)])
-    plt.subplots_adjust(left=0.25, bottom=0.1, right=0.95, top=0.95)
+    # Use a ratio of the domain and range of the set of plots to better fit the graphs in the window
+    plt.axis([0, (number_of_months * 1.1), 0, (largest_y_val * 1.1)])
+    plt.subplots_adjust(left=0.25, bottom=0.10, right=0.95, top=0.95)
 
     plt.title('Amortization Plot')
     plt.xlabel('Number of months')

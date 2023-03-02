@@ -3,6 +3,8 @@
 from os import system
 import helper_functions as hf
 
+
+# TODO: GO THROUGH ALL FILES AND RENAME ALL MONTHLY STUFF TO MONTHS AMOUNT INSTEAD OF 
 def main() -> None:
     system('clear')
     
