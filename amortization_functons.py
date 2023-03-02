@@ -1,20 +1,15 @@
 #! /usr/bin/python3
 
-import pandas as pd
-
 def calculate_payment_amount(principal: float,
                              annual_interest_rate: float,
-                             number_of_payments: int) -> float:
+                             number_of_months: int) -> float:
     '''
     Calculates the monthly payment amount in order to amortizate a loan.
     
     Args:
         principal (float):              The total amount of money lent
         annual_interest_rate (float):   The percentage amount the owed amount will grow in a year
-        number_of_payments (int):       The total number of payments made over the life of the loan
-                                        (If payments are made monthly, this is the same value as the
-                                         loan's lifetime in months)
-
+        number_of_months (int):         The lifetime of the loan in months
 
     Returns:
         monthly_payment_amount (float)
@@ -28,8 +23,8 @@ def calculate_payment_amount(principal: float,
 
 
     
-    numerator = interest_rate * ((1 + interest_rate) ** (number_of_payments))
-    denominator = ((1 + interest_rate) ** (number_of_payments)) - 1
+    numerator = interest_rate * ((1 + interest_rate) ** (number_of_months))
+    denominator = ((1 + interest_rate) ** (number_of_months)) - 1
 
     monthly_payment_amount = principal * (numerator / denominator)
 
@@ -45,13 +40,12 @@ def amortizatize(principal: float,
                                                          list[float],
                                                          list[float]]:
     '''
-    Generates lists with each subsequent element corrosponding to each month until the remaining balance becomes zero.
+    Generates lists of funds with each index corrosponding to each month's relevant values
 
     Args:
         principal (float):                    The total amount of money lent
-        annual_interest_rate (float) :        The percentage amount the owed amount will grow in a year
+        annual_interest_rate (float):         The percentage amount the owed amount will grow in a year
         monthly_payment_amount (float):       The amount of money paid per month
-
 
     Returns:
         balances (list[float]):               The amount of money still owed each month
@@ -74,7 +68,8 @@ def amortizatize(principal: float,
 
     # Convert annual interest rate to monthly
     interest_rate = annual_interest_rate / 12
-    
+
+    # Generates the lists, appending elements to each list until the remaining balances becomes zero   
     while remaining_balance > 0: #TODO: Consider that a last payment might overpay slightly, so I must make this last payment exactly the
         #remaining balance of the last month. ALSO need to think about rounding errors. Maybe concider Decimal()?
 
@@ -97,45 +92,4 @@ def amortizatize(principal: float,
         monthly_interest_paid.append(interest_amount)
         monthly_principal_paid.append(principal_amount)
 
-    # Round each element of each the list
-    # balances = [round(x, 2) for x in balances]
-    # total_interest_paid = [round(x, 2) for x in total_interest_paid]
-    # total_principal_paid = [round(x, 2) for x in total_principal_paid]
-    # monthly_interest_paid = [round(x, 2) for x in monthly_interest_paid]
-    # monthly_principal_paid = [round(x, 2) for x in monthly_principal_paid]
-
     return balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid
-
-
-
-def display_data(balances,
-                 total_interest_paid,
-                 total_principal_paid,
-                 monthly_interest_paid,
-                 monthly_principal_paid) -> None:
-
-    '''
-    Displays on a monthly basis (1) remaining balance, (2) total interest paid, (3) total principal paid, (3) monthly interest paid, and 
-    (3) monthly principal paid. 
-    '''
-
-    # Insert $ in front and a comma every thousands place.
-    pd.options.display.float_format = '${:,.2f}'.format
-
-    # Allows for much more data to be displayed.
-    pd.set_option('display.max_rows', 512)
-
-    data = {
-        'Remaining Balance': balances,
-        'Total Interest Paid': total_interest_paid,
-        'Total Principal Paid': total_principal_paid,
-        'Monthly Interest Paid': monthly_interest_paid,
-        'Monthly Principal Paid': monthly_principal_paid
-        }
-
-    df = pd.DataFrame(data)
-
-    # Name the index column 'Month' instead of being unnamed by default
-    df.index.name = 'Month'
- 
-    print(df)
