@@ -49,7 +49,7 @@ def read_user_principal_size() -> float:
         if (1_000 <= input_ <=  5_000_000):
             princpial = round(input_, 2)
             return princpial
-        print('Please provide a value between 1,000 and 5,000,000.')
+        print('Please provide a value between $1,000 and $5,000,000.')
 
 
 

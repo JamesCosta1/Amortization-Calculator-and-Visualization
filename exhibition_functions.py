@@ -20,7 +20,7 @@ def display_data(balances,
     pd.options.display.float_format = '${:,.2f}'.format
 
     # Allow for much more data to be displayed.
-    pd.set_option('display.max_rows', 601)
+    pd.set_option('display.max_rows', 999)
 
     data = {
         'Remaining Balance': balances,
@@ -32,14 +32,11 @@ def display_data(balances,
 
     df = pd.DataFrame(data)
 
+
     # Name the index column 'Month' instead of being unnamed by default
     df.index.name = 'Month'
  
     print(df)
-
-    print('test') #DELETE LATER
-
-    print(f'Last element of balances is {balances[-1]}') #DELETE LATER
 
 
 
@@ -66,7 +63,6 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
 
     plots = [balances_plot, total_interest_plot, total_principal_plot, monthly_interest_plot, monthly_principal_plot]
 
-    # TODO: MAKE THE BUTTONS/LEGEND COLORED
     def determine_higest_point(balances, total_interest_paid):
         '''
         Finds the largest value among all lists (balances and total_interest_paid are the only two contenders among the
@@ -120,5 +116,3 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
 
     check_box.on_clicked(set_visible)
     plt.show()
-
-# TODO: POTENTIALLY WRITE A DOWNLOAD TO CSV FILE OPTION THAT THE USER CAN CHOOSE
