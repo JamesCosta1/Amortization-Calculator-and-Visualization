@@ -71,7 +71,7 @@ def amortizatize(principal: float,
 
     # Generates the lists, appending elements to each list until the remaining balances becomes zero   
     while remaining_balance > 0: #TODO: Consider that a last payment might overpay slightly, so I must make this last payment exactly the
-        #remaining balance of the last month. ALSO need to think about rounding errors. Maybe concider Decimal()?
+        #remaining balance of the last month.
 
         # Calculate the interest amount for this month
         interest_amount = remaining_balance * interest_rate
