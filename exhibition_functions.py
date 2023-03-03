@@ -37,6 +37,10 @@ def display_data(balances,
  
     print(df)
 
+    print('test') #DELETE LATER
+
+    print(f'Last element of balances is {balances[-1]}') #DELETE LATER
+
 
 
 def plotter(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid) -> None:
@@ -54,11 +58,11 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
     months = range(len(balances))
 
     _, ax = plt.subplots()
-    balances_plot, = ax.plot(months, balances, color='teal', label='Balance')
-    total_interest_plot, = ax.plot(months, total_interest_paid, color='darkturquoise', label='Total Interest Paid')
-    total_principal_plot, = ax.plot(months, total_principal_paid, color='mediumseagreen', label='Total Principal Paid')
-    monthly_interest_plot, = ax.plot(months, monthly_interest_paid, color='mediumturquoise',label='Interest Paid per Month')
-    monthly_principal_plot, = ax.plot(months, monthly_principal_paid, color='springgreen', label='Principal Paid per Month')
+    balances_plot, = ax.plot(months, balances, color='seagreen', label='Remaining Balance')
+    total_interest_plot, = ax.plot(months, total_interest_paid, color='red', label='Total Interest Paid')
+    total_principal_plot, = ax.plot(months, total_principal_paid, color='blue', label='Total Principal Paid')
+    monthly_interest_plot, = ax.plot(months, monthly_interest_paid, color='sandybrown', label='Monthly Interest Paid')
+    monthly_principal_plot, = ax.plot(months, monthly_principal_paid, color='violet', label='Monthly Principal Paid')
 
     plots = [balances_plot, total_interest_plot, total_principal_plot, monthly_interest_plot, monthly_principal_plot]
 
@@ -92,8 +96,13 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
     plt.gca().set_yticklabels(['${:,.0f}'.format(x) for x in current_y_values])
     
     plt.grid()
+    plt.legend(bbox_to_anchor=(-0.08, 0.95),
+               loc='upper right',
+               fontsize=12,
+               labelcolor=['seagreen', 'red', 'blue', 'sandybrown', 'violet']
+               )
 
-    # Generate CheckButton widget
+    # ~~~~~~~~Generate CheckButtons widget~~~~~~~~
 
     labels = ['Remaining Balance', 'Total Interest Paid', 'Total Principal Paid', 'Monthly Interest Paid', 'Monthly Principal Paid']
     # Set all plots to visible on startup
