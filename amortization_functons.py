@@ -21,11 +21,9 @@ def calculate_payment_amount(principal: float,
     # Convert annual interest rate to monthly
     interest_rate = annual_interest_rate / 12
 
-
-    
+    # Construct the formula
     numerator = interest_rate * ((1 + interest_rate) ** (number_of_months))
     denominator = ((1 + interest_rate) ** (number_of_months)) - 1
-
     monthly_payment_amount = principal * (numerator / denominator)
 
     return monthly_payment_amount
@@ -34,6 +32,7 @@ def calculate_payment_amount(principal: float,
 
 def amortizatize(principal: float,
                  annual_interest_rate: float,
+                 number_of_months: float,
                  monthly_payment_amount: float) -> tuple[list[float],
                                                          list[float],
                                                          list[float],
@@ -45,6 +44,7 @@ def amortizatize(principal: float,
     Args:
         principal (float):                    The total amount of money lent
         annual_interest_rate (float):         The percentage amount the owed amount will grow in a year
+        number_of_months (int):               The lifetime of the loan in months
         monthly_payment_amount (float):       The amount of money paid per month
 
     Returns:
@@ -70,7 +70,7 @@ def amortizatize(principal: float,
     interest_rate = annual_interest_rate / 12
 
     # Generates the lists, appending elements to each list until the remaining balances becomes zero   
-    while remaining_balance > 0: #TODO: Consider that a last payment might overpay slightly, so I must make this last payment exactly the
+    for _ in range(number_of_months): #TODO: Consider that a last payment might overpay slightly, so I must make this last payment exactly the
         #remaining balance of the last month.
 
         # Calculate the interest amount for this month
@@ -91,7 +91,5 @@ def amortizatize(principal: float,
         total_principal_paid.append(total_principal_paid[-1] + principal_amount)
         monthly_interest_paid.append(interest_amount)
         monthly_principal_paid.append(principal_amount)
-    
-    
     
     return balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid

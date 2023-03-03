@@ -37,40 +37,40 @@ def read_user_float() -> float:
             return input_
 
         except ValueError:
-            print('Please enter a valid input.')
+            print('\nPlease enter a valid input.')
 
 
 
 def read_user_principal_size() -> float:
     ''' Ensures the user provides a satisfactory principal.'''
-    print('Please enter the size of the loan between $1,000 and $5,000,000:')
+    print('\nPlease enter the size of the loan between $1,000 and $5,000,000:')
     while True:
         input_ = read_user_float()
         if (1_000 <= input_ <=  5_000_000):
             princpial = round(input_, 2)
             return princpial
-        print('Please provide a value between $1,000 and $5,000,000.')
+        print('\nPlease provide a value between $1,000 and $5,000,000.')
 
 
 
 def read_user_interest_rate_amount() -> float:
     ''' Ensures the user provides a satisfactory annual interest rate.'''
-    print('Please enter the loan\'s annual interest rate (as a percent) bewteen 1% and 45%:')
+    print('\nPlease enter the loan\'s annual interest rate (as a percent) bewteen 1% and 45%:')
     while True:
         input_ = read_user_float()
         if (1 <= input_ <=  45):
             annual_interest_rate = round(input_, 2)
             return annual_interest_rate
-        print('Please provide a value between 1% and 45%.')
+        print('\nPlease provide a value between 1% and 45%.')
 
 
 
 def read_user_number_of_months() -> int:
-    print('Please enter the lifetime of the loan (in months) between 3 and 600:')
     ''' Ensures the user provides a satisfactory number of months.'''
+    print('\nPlease enter the lifetime of the loan (in months) between 3 and 600:')
     while True:
         input_ = read_user_int()
         if (3 <= input_ <=  600):
             number_of_months = input_
             return number_of_months
-        print('Please provide a value between 3 and 600.')
+        print('\nPlease provide a value between 3 and 600.')
