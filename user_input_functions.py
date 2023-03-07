@@ -14,7 +14,6 @@ def read_user_int() -> int:
             print('Please enter a valid input.')
 
 
-
 def read_user_float() -> float:
     '''Ensures the user provides a float and strips away all non-numberic characters.'''
     while True:
@@ -27,10 +26,10 @@ def read_user_float() -> float:
             input_ = input_.replace(',', '')
 
             # Removes any leading $ signs or tailing % signs in the user input
-            if input_[0] == '$':
+            if input_.startswith('$'):
                 input_ = input_[1:]
 
-            if input_[-1] == '%':
+            if input_.endswith('%'):
                 input_ = input_[:-1]
     
             input_ = float(input_)
@@ -38,7 +37,6 @@ def read_user_float() -> float:
 
         except ValueError:
             print('\nPlease enter a valid input.')
-
 
 
 def read_user_principal_size() -> float:
@@ -52,7 +50,6 @@ def read_user_principal_size() -> float:
         print('\nPlease provide a value between $1,000 and $5,000,000.')
 
 
-
 def read_user_interest_rate_amount() -> float:
     ''' Ensures the user provides a satisfactory annual interest rate.'''
     print('\nPlease enter the loan\'s annual interest rate (as a percent) bewteen 1% and 45%:')
@@ -62,7 +59,6 @@ def read_user_interest_rate_amount() -> float:
             annual_interest_rate = round(input_, 2)
             return annual_interest_rate
         print('\nPlease provide a value between 1% and 45%.')
-
 
 
 def read_user_number_of_months() -> int:

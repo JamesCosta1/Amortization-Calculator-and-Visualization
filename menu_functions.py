@@ -5,7 +5,7 @@ import exhibition_functions as ef
 import user_input_functions as uf
 
 def recieve_initial_parameters() -> tuple[float, float, int, float]: 
-    '''
+    """
     Aggregates the user input data and returns the the calculated values. This is an intermediate function
     in order to minimize the number of function calls in the main file.
 
@@ -14,7 +14,7 @@ def recieve_initial_parameters() -> tuple[float, float, int, float]:
         annual_interest_rate (float):    The percentage amount the owed amount will grow in a year
         number_of_months (int):          The lifetime of the loan in months
         monthly_payment_amount (float):  The amount of money paid per month
-    '''
+    """
 
     princpial = uf.read_user_principal_size()
     annual_interest_rate = uf.read_user_interest_rate_amount()
@@ -25,7 +25,6 @@ def recieve_initial_parameters() -> tuple[float, float, int, float]:
     print(f'\nGiven this information, your monthly payment will be ${monthly_payment_amount:,.2f}')
 
     return princpial, annual_interest_rate, number_of_months, monthly_payment_amount
-
 
 
 def options_menu(principal: float, annual_interest_rate: float, number_of_months: int, monthly_payment_amount: float) -> bool:

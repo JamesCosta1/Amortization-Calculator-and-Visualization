@@ -3,7 +3,7 @@
 def calculate_payment_amount(principal: float,
                              annual_interest_rate: float,
                              number_of_months: int) -> float:
-    '''
+    """
     Calculates the monthly payment amount in order to amortizate a loan.
     
     Args:
@@ -13,7 +13,7 @@ def calculate_payment_amount(principal: float,
 
     Returns:
         monthly_payment_amount (float)
-    '''
+    """
 
     # Convert annual interest rate as a percent to a decimal
     annual_interest_rate /= 100
@@ -22,12 +22,11 @@ def calculate_payment_amount(principal: float,
     interest_rate = annual_interest_rate / 12
 
     # Construct the formula
-    numerator = interest_rate * ((1 + interest_rate) ** (number_of_months))
-    denominator = ((1 + interest_rate) ** (number_of_months)) - 1
-    monthly_payment_amount = principal * (numerator / denominator)
+    numerator = interest_rate * ((1+interest_rate)**number_of_months)
+    denominator = ((1+interest_rate)**(number_of_months)) - 1
+    monthly_payment_amount = principal * (numerator/denominator)
 
     return monthly_payment_amount
-
 
 
 def amortizatize(principal: float,
@@ -38,7 +37,7 @@ def amortizatize(principal: float,
                                                          list[float],
                                                          list[float],
                                                          list[float]]:
-    '''
+    """
     Generates lists of funds with each index corrosponding to each month's relevant values
 
     Args:
@@ -53,7 +52,7 @@ def amortizatize(principal: float,
         total_principal_paid (list[float]):   The amount of principal paid thus far
         monthly_interest_paid (list[float]):  The amount of funds used to pay interest each month
         monthly_principal_paid (list[float]): The amount of funds used to pay interest each month
-    '''
+    """
 
     # Initialize
     remaining_balance = principal

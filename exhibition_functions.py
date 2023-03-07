@@ -4,17 +4,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.widgets import CheckButtons
 
-
 def display_data(balances,
                  total_interest_paid,
                  total_principal_paid,
                  monthly_interest_paid,
                  monthly_principal_paid) -> None:
-
-    '''
+    """
     Displays on a monthly basis (1) remaining balance, (2) total interest paid, (3) total principal paid, (3) monthly interest paid, and 
     (3) monthly principal paid. 
-    '''
+    """
 
     # Insert $ in front and a comma every three didgets
     pd.options.display.float_format = '${:,.2f}'.format
@@ -32,16 +30,15 @@ def display_data(balances,
 
     df = pd.DataFrame(data)
 
-
     # Name the index column 'Month' instead of being unnamed by default
     df.index.name = 'Month'
- 
+
     print(df)
 
 
 
 def plotter(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid) -> None:
-    '''
+    """
     Plots each set of values on a single plot in a new window and gives togglable display capabilities to the user for each plot.
 
     Args:
@@ -50,7 +47,7 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
         total_principal_paid (list[float]):   The amount of principal paid thus far
         monthly_interest_paid (list[float]):  The amount of funds used to pay interest each month
         monthly_principal_paid (list[float]): The amount of funds used to pay interest each month
-    '''
+    """
 
     months = range(len(balances))
 
@@ -64,10 +61,11 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
     plots = [balances_plot, total_interest_plot, total_principal_plot, monthly_interest_plot, monthly_principal_plot]
 
     def determine_higest_point(balances, total_interest_paid):
-        '''
+        """
         Finds the largest value among all lists (balances and total_interest_paid are the only two contenders among the
         five lits) so the y-axis can be determined by this value.
-        '''
+        """
+        
         if balances[0] > total_interest_paid[-1]:
             largest_y_val = balances[0]
 
