@@ -7,11 +7,20 @@ def read_user_int() -> int:
         try:
             # Removes any leading or tailing spaces
             input_ = input_.strip()
+            # Catch for the user using k for thousands
+            if input_.endswith('k'):
+                old_input = input_
+                input_ = input_[:-1]
+                input_ = int(input_)
+                input_ *= 1_000
+                print(f'\nYour input of {old_input} was interpreted as {input_:,}')
+
+
             input_ = int(input_)
             return input_
 
         except ValueError:
-            print('Please enter a valid input.')
+            print('\nNot a valid input.\n')
 
 
 def read_user_float() -> float:
@@ -31,12 +40,21 @@ def read_user_float() -> float:
 
             if input_.endswith('%'):
                 input_ = input_[:-1]
+
+            # Catch for the user using k for thousands
+            if input_.endswith('k'):
+                old_input = input_
+                input_ = input_[:-1]
+                input_ = float(input_)
+                input_ *= 1_000
+                print(f'\nYour input of {old_input} was interpreted as {input_:,.2f}')
+
     
             input_ = float(input_)
             return input_
 
         except ValueError:
-            print('\nPlease enter a valid input.')
+            print('\nNot a valid input.\n')
 
 
 def read_user_principal_size() -> float:

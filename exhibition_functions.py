@@ -1,8 +1,23 @@
 #! /usr/bin/python3
 
-import pandas as pd
-import matplotlib.pyplot as plt
-from matplotlib.widgets import CheckButtons
+missing_libraries = []
+try:
+    import pandas as pd
+except ImportError:
+    missing_libraries.append('pandas')
+
+try:
+    import matplotlib.pyplot as plt
+    from matplotlib.widgets import CheckButtons
+except:
+    missing_libraries.append('matplotlib')
+
+if (missing_libraries) and not (__name__ == '__main__'):
+    print('Missing libraries:', end=' ')
+    print(*missing_libraries, sep=', ')
+    print('\nParts of this application are still accessible but some features require those packages. \n')
+    print('A walkthough on how to install python libraries can be found at: https://packaging.python.org/en/latest/tutorials/installing-packages/')
+
 
 def display_data(balances,
                  total_interest_paid,
@@ -13,6 +28,9 @@ def display_data(balances,
     Displays on a monthly basis (1) remaining balance, (2) total interest paid, (3) total principal paid, (3) monthly interest paid, and 
     (3) monthly principal paid. 
     """
+    if 'pandas' in missing_libraries:
+        print('Missing library: pandas \n')
+        print('Install this library in order to gain functionally to this display feature. \n')
 
     # Insert $ in front and a comma every three didgets
     pd.options.display.float_format = '${:,.2f}'.format
@@ -48,6 +66,10 @@ def plotter(balances, total_interest_paid, total_principal_paid, monthly_interes
         monthly_interest_paid (list[float]):  The amount of funds used to pay interest each month
         monthly_principal_paid (list[float]): The amount of funds used to pay interest each month
     """
+
+    if 'matplotlib' in missing_libraries:
+        print('Missing library: matplotlib \n')
+        print('Install this library in order to gain functionally to this plotting feature. \n')
 
     months = range(len(balances))
 

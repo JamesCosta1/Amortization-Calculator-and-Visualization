@@ -1,13 +1,12 @@
 #! /usr/bin/python3
 
-from os import system
 import menu_functions as mf
 import user_input_functions as uf
 
 def main() -> None:
-    system('clear')
     
     # This variable is defined due to scoping. I want to be able to close the progam while inside of the options menu.
+    global program_is_running
     program_is_running = True
     print('Welcome to this amortiztion calculator.')
 
@@ -30,7 +29,7 @@ def main() -> None:
             program_is_running = mf.options_menu(principal, annual_interest_rate, number_of_months, monthly_payment_amount)
 
         else:
-            print("Please input a valid option.")
+            print('\nNot a valid input.\n')
     
     print('\nThank you for using this application, have good day!\n')
 

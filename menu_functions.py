@@ -3,6 +3,7 @@
 import amortization_functons as af
 import exhibition_functions as ef
 import user_input_functions as uf
+import main
 
 def recieve_initial_parameters() -> tuple[float, float, int, float]: 
     """
@@ -22,7 +23,7 @@ def recieve_initial_parameters() -> tuple[float, float, int, float]:
 
     monthly_payment_amount = af.calculate_payment_amount(princpial, annual_interest_rate, number_of_months)
     
-    print(f'\nGiven this information, your monthly payment will be ${monthly_payment_amount:,.2f}')
+    print(f'\nGiven this information, your monthly payment will be ${monthly_payment_amount:,.2f}.')
 
     return princpial, annual_interest_rate, number_of_months, monthly_payment_amount
 
@@ -31,8 +32,8 @@ def options_menu(principal: float, annual_interest_rate: float, number_of_months
     program_is_running = True
     while True:
         print('\nWhat would you like to do now? \n')
-        print(f'1. Display the monthly schedule using your data and a monthly payment of ${monthly_payment_amount:,.2f}')
-        print(f'2. View the amortization graph using a your data and a monthly payment of ${monthly_payment_amount:,.2f}')
+        print(f'1. Display the monthly schedule using this data and a monthly payment of ${monthly_payment_amount:,.2f}')
+        print(f'2. View the amortization graph using this data and a monthly payment of ${monthly_payment_amount:,.2f}')
         print('3. To back to the main menu.')
         print('0. Close the program')
 
@@ -65,4 +66,4 @@ def options_menu(principal: float, annual_interest_rate: float, number_of_months
             return program_is_running
 
         else:
-            print("Please input a valid option.")
+            print('\nNot a valid input.\n')
