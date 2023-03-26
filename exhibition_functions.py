@@ -9,14 +9,16 @@ except ImportError:
 try:
     import matplotlib.pyplot as plt
     from matplotlib.widgets import CheckButtons
-except:
+except ImportError:
     missing_libraries.append('matplotlib')
 
-if (missing_libraries) and not (__name__ == '__main__'):
+if (missing_libraries) and (__name__ != '__main__'):
     print('Missing libraries:', end=' ')
     print(*missing_libraries, sep=', ')
-    print('\nParts of this application are still accessible but some features require those packages. \n')
-    print('A walkthough on how to install python libraries can be found at: https://packaging.python.org/en/latest/tutorials/installing-packages/')
+    print('\nParts of this application are still accessible but some features \
+        require those packages. \n')
+    print('A walkthough on how to install python libraries can be found at: \
+          https://packaging.python.org/en/latest/tutorials/installing-packages/')
 
 
 def display_data(balances,
@@ -25,8 +27,8 @@ def display_data(balances,
                  monthly_interest_paid,
                  monthly_principal_paid) -> None:
     """
-    Displays on a monthly basis (1) remaining balance, (2) total interest paid, (3) total principal paid, (3) monthly interest paid, and 
-    (3) monthly principal paid. 
+    Displays on a monthly basis (1) remaining balance, (2) total interest paid,
+    (3) total principal paid, (4) monthly interest paid, and (5) monthly principal paid. 
     """
     if 'pandas' in missing_libraries:
         print('Missing library: pandas \n')
@@ -55,9 +57,11 @@ def display_data(balances,
 
 
 
-def plotter(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid) -> None:
+def plotter(balances, total_interest_paid, total_principal_paid, monthly_interest_paid,
+            monthly_principal_paid) -> None:
     """
-    Plots each set of values on a single plot in a new window and gives togglable display capabilities to the user for each plot.
+    Plots each set of values on a single plot in a new window and gives togglable display
+    capabilities to the user for each plot.
 
     Args:
         balances (list[float]):               The amount of money still owed each month

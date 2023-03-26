@@ -31,7 +31,7 @@ def calculate_payment_amount(principal: float,
 
 def amortizatize(principal: float,
                  annual_interest_rate: float,
-                 number_of_months: float,
+                 number_of_months: int,
                  monthly_payment_amount: float) -> tuple[list[float],
                                                          list[float],
                                                          list[float],
@@ -41,8 +41,8 @@ def amortizatize(principal: float,
     Generates lists of funds with each index corrosponding to each month's relevant values
 
     Args:
-        principal (float):                    The total amount of money lent
-        annual_interest_rate (float):         The percentage amount the owed amount will grow in a year
+        principal (float):                    The amount of money lent
+        annual_interest_rate (float):         The precent growth of the loan in a year
         number_of_months (int):               The lifetime of the loan in months
         monthly_payment_amount (float):       The amount of money paid per month
 
@@ -68,9 +68,8 @@ def amortizatize(principal: float,
     # Convert annual interest rate to monthly
     interest_rate = annual_interest_rate / 12
 
-    # Generates the lists, appending elements to each list until the remaining balances becomes zero   
-    for _ in range(number_of_months): #TODO: Consider that a last payment might overpay slightly, so I must make this last payment exactly the
-        #remaining balance of the last month.
+    # Generates the lists, appending elements to each list until the remaining balances becomes zero
+    for _ in range(number_of_months):
 
         # Calculate the interest amount for this month
         interest_amount = remaining_balance * interest_rate

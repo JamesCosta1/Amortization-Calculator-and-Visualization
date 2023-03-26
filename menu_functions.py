@@ -3,7 +3,7 @@
 import amortization_functons as af
 import exhibition_functions as ef
 import user_input_functions as uf
-import main
+
 
 def recieve_initial_parameters() -> tuple[float, float, int, float]: 
     """
@@ -22,7 +22,7 @@ def recieve_initial_parameters() -> tuple[float, float, int, float]:
     number_of_months = uf.read_user_number_of_months()
 
     monthly_payment_amount = af.calculate_payment_amount(princpial, annual_interest_rate, number_of_months)
-    
+
     print(f'\nGiven this information, your monthly payment will be ${monthly_payment_amount:,.2f}.')
 
     return princpial, annual_interest_rate, number_of_months, monthly_payment_amount
@@ -48,7 +48,7 @@ def options_menu(principal: float, annual_interest_rate: float, number_of_months
             balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid = af.amortizatize(principal,
                                                                                                                                  annual_interest_rate,
                                                                                                                                  number_of_months,
-                                                                                                                                 monthly_payment_amount)                    
+                                                                                                                                 monthly_payment_amount)
             # Pass the lists into the data frame
             ef.display_data(balances, total_interest_paid, total_principal_paid, monthly_interest_paid, monthly_principal_paid)
 
