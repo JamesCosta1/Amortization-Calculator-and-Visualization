@@ -52,8 +52,10 @@ def display_data(balances,
 
     df = pd.DataFrame(data)
 
+    df = df.rename_axis('Month', axis=1)
+
     # Name the index column 'Month' instead of being unnamed by default
-    df.index.name = 'Month'
+    # df.index.name = 'Month'
 
     print(df)
 
