@@ -38,7 +38,9 @@ def display_data(balances,
     pd.options.display.float_format = '${:,.2f}'.format
 
     # Allow for much more data to be displayed.
+    pd.set_option('display.max_columns', 999)
     pd.set_option('display.max_rows', 999)
+    pd.set_option('display.width', 999)
 
     data = {
         'Remaining Balance': balances,
